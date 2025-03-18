@@ -46,6 +46,12 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Something is wrong!";
+    res.status(statusCode).render('partials/error', { err });
+
+})
 
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
