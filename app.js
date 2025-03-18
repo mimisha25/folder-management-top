@@ -32,4 +32,20 @@ app.use(session({
 
 app.use(passport.session());
 
-app.use(flash());
+app.use((req, res, next) => {
+    res.locals.user = req.user || null;
+    next();
+})
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    next();
+});
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+
+
+
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
