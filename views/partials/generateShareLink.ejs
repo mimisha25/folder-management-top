@@ -1,0 +1,31 @@
+<div class="my-2">
+    <p class="d-inline-flex gap-1">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2"
+            aria-expanded="false" aria-controls="multiCollapseExample2">Generate Share
+            Link</button>
+    </p>
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+                <div class="card card-body">
+                    <form action="/share-folder/<%= folder.id %>" method="POST">
+                        <div class="input-group mb-2 input-group-sm">
+                            <label class="input-group-text" for="inputGroupSelect01">Expiration</label>
+                            <select class="form-select " name="duration" id="inputGroupSelect01">
+                                <option selected>Choose...
+                                </option>
+                                <option value="1">1 Day</option>
+                                <option value="7">7 Days
+                                </option>
+                                <option value="20">30 Days
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success d-block p-1 my-1"
+                            type="button">Generate</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
