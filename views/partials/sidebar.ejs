@@ -1,0 +1,68 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary vh-100" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <%- include('../assets/logo', {w:40, h:32}) %>
+            <span class="fs-4">FilerCo</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link <%= (currentPath === '/') ? 'active' : '' %>" aria-current="page">
+                <%- include('../assets/home') %>
+                    Home
+            </a>
+        </li>
+        <li>
+            <a href="/" class="nav-link <%= (currentPath === '/dashboard') ? 'active' : '' %>">
+                <%- include('../assets/dashboard') %>
+                    Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="/folders" class="nav-link <%= (currentPath === '/folders') ? 'active' : '' %>">
+                <%- include('../assets/folders') %>
+                    Folders
+            </a>
+        </li>
+        <li>
+            <a href="/files" class="nav-link <%= (currentPath === '/files') ? 'active' : '' %>">
+                <%- include('../assets/files') %>
+                    Files
+            </a>
+        </li>
+        <li>
+            <a href="/shared" class="nav-link <%= (currentPath === '/shared') ? 'active' : '' %>">
+                <%- include('../assets/shared') %>
+                    Shared Folders
+            </a>
+        </li>
+    </ul>
+    <hr>
+
+    <%if(user){%>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <%- include('../assets/profile') %>
+
+                    <strong class="mx-1">
+                        <%=user.username%>
+                    </strong>
+            </a>
+            <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/logout">Log out</a></li>
+            </ul>
+        </div>
+        <%}else{%>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a href="/register" role="button" class="btn btn-success">Sign In</a>
+                <a href="/login" role="button" class="btn btn-primary">Log In</a>
+            </div>
+
+            <%}%>
+</div>
