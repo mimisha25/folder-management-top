@@ -21,4 +21,19 @@ dashboardRouter.route('/register')
     });
 
 
+dashboardRouter.route('/login')
+    .get((req, res) => {
+        res.render('auth', { action: '/login', link: '/register', header: 'Log In', linkT: 'Sign In' });
+    })
+    .post(async (req, res) => {
+        const { username, password } = req.body;
+        const user = await prisma.user.findUnique({ where: { username } });
+        if (!user) return res.status(400).send('User not found');
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (isValidPassword) {
+            req.session.userId = user.id;
+            res.redirect('/dashboard');
+        } else res.status(400).send('Invalid password');
+    });
+
 module.exports = dashboardRouter;
