@@ -88,4 +88,23 @@ foldersRouter.get('/share/:token', async (req, res) => {
     } catch (error) { res.status(500).send('Error accessing shared folder: ' + error.message) }
 });
 
+
+foldersRouter.get('/shared', checkAuth, async (req, res) => {
+    try {
+        const user = await prisma.user.findUnique({ where: { id: req.session.userId } });
+        const sharedFolders = await prisma.folder.findMany({
+            where: { userId: req.session.userId, shareToken: { not: null } }
+        });
+        sharedFolders.forEach(folder => {
+            const shareExpiresAt = folder.shareExpiresAt;
+            if (shareExpiresAt) {
+                const date = shareExpiresAt.toLocaleDateString();
+                const time = shareExpiresAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                folder.formattedShareExpiresAt = { date, time };
+            }
+        });
+        res.render('folders/shared-folders-list', { sharedFolders, user, currentPath: '/shared' });
+    } catch (error) { res.status(500).send('Error fetching shared folders.') }
+});
+
 module.exports = foldersRouter;
