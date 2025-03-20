@@ -44,4 +44,12 @@ dashboardRouter.get('/logout', (req, res) => {
 });
 
 
+dashboardRouter.get('/dashboard', checkAuth, catchAsync(async (req, res) => {
+    if (!req.session.userId) return res.status(400).send('No user ID found in session');
+    const user = await prisma.user.findUnique({ where: { id: req.session.userId } });
+    if (!user) return res.status(404).send('User not found.');
+    const folders = await prisma.folder.findMany({ where: { userId: req.session.userId } });
+    res.render('dashboard', { user, folders, currentPath: '/dashboard' });
+}));
+
 module.exports = dashboardRouter;
