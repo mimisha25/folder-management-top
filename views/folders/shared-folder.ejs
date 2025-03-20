@@ -1,0 +1,76 @@
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+        <main class="p-5">
+            <% if (user) { %>
+                <h3>Shared folder:
+                    <strong class="text-primary">
+                        <%= folder.name %>
+                    </strong>
+                </h3>
+                <% if (folder.shareExpiresAt) { %>
+                    <div class="alert alert-success" style="display: none;" id="copyMessage" role="alert">
+                        Link copied to clipboard!
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Expiration:</strong>
+                        <%= folder.formattedShareExpiresAt.date%> -
+                            <%= folder.formattedShareExpiresAt.time%>
+                                Click to copy the <a href="javascript:void(0);" onclick="copyLink('<%= shareLink %>')">
+                                    <%= 'link' %>
+                                </a>
+                    </div>
+                    </div>
+                    <% } %>
+                        <h6>Files</h5>
+                            <% if (folder.files && folder.files.length> 0) { %>
+                                <ul class="list-group">
+                                    <% folder.files.forEach(file=> { %>
+                                        <li class="list-group-item"> <a href="<%= file.publicUrl %>" target="_blank"
+                                                class="text-decoration-none text-dark">
+                                                <%= file.name %>
+                                            </a></li>
+                                        <% }) %>
+                                </ul>
+                                <% } else { %>
+                                    <p>No files found in this folder.</p>
+                                    <% } %>
+                                        <% } else { %>
+                                            <h3>Shared folder:
+                                                <strong class="text-primary">
+                                                    <%= folder.name %>
+                                                </strong>
+                                            </h3>
+                                            <% if (folder.shareExpiresAt) { %>
+                                                <div class="alert alert-success" style="display: none;" id="copyMessage"
+                                                    role="alert">
+                                                    Link copied to clipboard!
+                                                </div>
+                                                <div class="alert alert-warning" role="alert">
+                                                    <strong>Expiration:</strong>
+                                                    <%= folder.formattedShareExpiresAt.date%> -
+                                                        <%= folder.formattedShareExpiresAt.time%>
+                                                            Click to copy the <a href="javascript:void(0);"
+                                                                onclick="copyLink('<%= shareLink %>')">
+                                                                <%= 'link' %>
+                                                            </a>
+                                                            <% } %>
+                                                                <h6>Files</h5>
+                                                                    <% if (folder.files && folder.files.length> 0) { %>
+                                                                        <ul class="list-group">
+                                                                            <% folder.files.forEach(file=> { %>
+                                                                                <li class="list-group-item"> <a
+                                                                                        href="<%= file.publicUrl %>"
+                                                                                        target="_blank"
+                                                                                        class="text-decoration-none text-dark">
+                                                                                        <%= file.name %>
+                                                                                    </a></li>
+                                                                                <% }) %>
+                                                                        </ul>
+                                                                        <% } else { %>
+                                                                            <p>No files found in this folder.</p>
+                                                                            <% } %>
+                                                                                <% } %>
+                                                                                    <%- include('../partials/sharedLinkAlert')
+                                                                                        %>
+                                                                                        <%- include('../partials/footer')
+                                                                                            %>
