@@ -36,4 +36,12 @@ dashboardRouter.route('/login')
         } else res.status(400).send('Invalid password');
     });
 
+dashboardRouter.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) return res.status(500).send('Error logging out');
+        res.redirect('/');
+    });
+});
+
+
 module.exports = dashboardRouter;
