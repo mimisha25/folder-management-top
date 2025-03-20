@@ -1,0 +1,79 @@
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+        <main class="p-5">
+            <%if(user){%>
+                <h1>All Shared Folders</h1>
+                <% if (sharedFolders.length> 0) { %>
+                    <div class="table-responsive">
+                        <table class="table  table-striped table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th colspan="3" class="text-center">Share Expiration</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end px-5">Date</td>
+                                    <td scope="col">Time</td>
+                                    <td scope="col">Validation</td>
+                                </tr>
+                            </thead>
+
+                            <tbody class="table-warning table-group-divider">
+                                <% let i=1; %>
+                                    <% sharedFolders.forEach(folder=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= i++; %>
+                                            </td>
+                                            <td>
+                                                <h5> <a href="/share/<%= folder.shareToken %>"
+                                                        class="text-decoration-none text-dark">
+                                                        <%= folder.name %>
+                                                    </a></h5>
+
+                                            </td>
+                                            <td>
+                                                <% if (folder.shareExpiresAt) { %>
+                                                    <span>
+                                                        <%= folder.formattedShareExpiresAt.date%>
+                                                    </span>
+                                            <td>
+                                                <span>
+                                                    <%= folder.formattedShareExpiresAt.time%>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <% if (new Date()> new Date(folder.shareExpiresAt)) { %>
+                                                    <span style="color: red;">Expired</span>
+                                                    <% } else { %>
+                                                        <span style="color: green;">Valid</span>
+                                                        <% } %>
+                                                            <% } else { %>
+                                                                <span>No expiration date set</span>
+                                                                <% } %>
+                                            </td>
+
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                            </tbody>
+
+
+                            <tfoot class="table-info">
+                                <td colspan="5">Total: <strong>
+                                        <%= sharedFolders.length%>
+                                    </strong>folders
+                                </td>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <% } else { %>
+                        <p>No shared folders available.</p>
+                        <% } %>
+                            <% } else { %>
+                                <p>Log in</p>
+                                <% } %>
+
+                                    <%- include('../partials/footer') %>
