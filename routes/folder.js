@@ -66,5 +66,26 @@ foldersRouter.post('/share-folder/:id', async (req, res) => {
     } catch (error) { res.status(500).send('Error creating share link: ' + error.message) }
 });
 
+foldersRouter.get('/share/:token', async (req, res) => {
+    const { token } = req.params;
+    try {
+        const folder = await prisma.folder.findFirst({ where: { shareToken: token }, include: { files: true } });
+        if (!folder) return res.status(404).send('Shared folder not found.');
+        if (token !== folder.shareToken) return res.status(400).send('Invalid share link.');
+        const currentDate = new Date();
+        if (currentDate > new Date(folder.shareExpiresAt)) return res.status(400).send('This share link has expired.');
+        const user = req.session.userId
+            ? await prisma.user.findUnique({ where: { id: req.session.userId } })
+            : null;
+        const shareLink = `http://localhost:3001/share/${token}`;
+        const shareExpiresAt = folder.shareExpiresAt;
+        if (shareExpiresAt) {
+            const date = shareExpiresAt.toLocaleDateString();
+            const time = shareExpiresAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            folder.formattedShareExpiresAt = { date, time };
+        }
+        res.render('folders/shared-folder', { folder, shareLink, user, currentPath: '/shared' });
+    } catch (error) { res.status(500).send('Error accessing shared folder: ' + error.message) }
+});
 
 module.exports = foldersRouter;
