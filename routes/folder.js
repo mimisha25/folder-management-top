@@ -50,4 +50,21 @@ foldersRouter.route('/folders/:id')
         } catch (error) { res.status(500).send('Error deleting folder: ' + error.message) }
     });
 
+foldersRouter.post('/share-folder/:id', async (req, res) => {
+    const folderId = req.params.id;
+    const duration = parseInt(req.body.duration, 10);
+    try {
+        const tokenString = `${folderId}-${Date.now()}`;
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + duration);
+        await prisma.folder.update({ where: { id: folderId }, data: { shareToken: tokenString, shareExpiresAt: expirationDate } });
+        const shareLink = `http://localhost:3001/share/${tokenString}`;
+        const userId = req.session.userId;
+        if (!userId) return res.status(401).send('User is not logged in.');
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        res.render('folders/folder-details', { shareLink, user, folder: await prisma.folder.findUnique({ where: { id: folderId } }) });
+    } catch (error) { res.status(500).send('Error creating share link: ' + error.message) }
+});
+
+
 module.exports = foldersRouter;
