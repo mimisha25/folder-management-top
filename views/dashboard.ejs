@@ -1,0 +1,46 @@
+<%- include('./partials/header') %>
+    <%- include('./partials/sidebar') %>
+        <main class="m-auto py-5">
+            <% if (user) { %>
+                <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
+                    <h1 class="text-body-emphasis">Upload File</h1>
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <div>
+                            <div class="alert alert-warning" role="alert">
+                                <%- include('./partials/badgeList') %>
+                            </div>
+                            <div class="file-upload my-4">
+                                <label for="file-input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                                        class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path
+                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                    </svg>
+                                </label>
+                                <input type="file" id="file-input" name="file"
+                                    accept=".jpeg, .jpg, .png, .gif, .pdf, .txt, .docx, .mp4, .avi, .mov, .mp3, .wav"
+                                    required style="display: none;" />
+                                <div id="file-name" style="margin-top: 10px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupSelect01">Folder:</label>
+                            <select class="form-select" name="folderId" id="inputGroupSelect01">
+                                <% folders.forEach(folder=> { %>
+                                    <option value="<%= folder.id %>">
+                                        <%= folder.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary px-5 mb-5" type="submit">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+                <% } %>
+                    <%- include('./partials/uploadFile') %>
+                        <%- include('./partials/footer') %>
