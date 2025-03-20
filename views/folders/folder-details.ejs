@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+        <main class="p-5">
+            <%if(user){%>
+                <h2 class="fst-italic">Folder: <%= folder.name %>
+                </h2>
+                <button type="button" class="update btn btn-warning btn-sm">Edit</button>
+                <%- include('../partials/modalEditFolder') %>
+                    <form action="/folders/<%= folder.id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this folder?')">Delete</button>
+                    </form>
+                    <% if (folder.files && folder.files.length> 0) { %>
+                        <div class="my-5">
+                            <h4>Files</h4>
+                            <ol class="list-group list-group-numbered">
+                                <% folder.files.forEach(file=> { %>
+
+                                    <li class="list-group-item d-flex gap-5 align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <h4>
+                                                <a href="<%= file.publicUrl %>" class="text-dark text-decoration-none">
+                                                    <%= file.name %>
+                                                </a>
+                                            </h4>
+                                            <a href="/files/<%= file.id %>" class="fst-italic text-dark">Details</a>
+
+                                        </div>
+                                        <div>
+                                            <form action="/files/<%= file.id %>?_method=DELETE" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this file?')">Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <% }) %>
+                            </ol>
+                        </div>
+                        <% } else { %>
+                            <p class="my-5"> No files in this folder.</p>
+                            <% } %>
+                                <% } %>
+                                    <%- include('../partials/footer') %>
