@@ -26,4 +26,23 @@ const upload = multer({
     limits: { fileSize: 50 * 1024 * 1024 }
 });
 
+
+uploadRouter.post('/upload', checkAuth, upload.single('file'), async (req, res) => {
+    const { folderId } = req.body;
+    const publicUrl = `/uploads/${path.basename(req.file.path)}`;
+    try {
+        const file = await prisma.file.create({
+            data: {
+                name: req.file.originalname,
+                path: req.file.path,
+                publicUrl: publicUrl,
+                size: req.file.size,
+                folderId,
+                userId: req.session.userId,
+            }
+        });
+        res.redirect(`/folders/${folderId}`);
+    } catch (error) { res.status(500).send('Error uploading file: ' + error.message); }
+});
+
 module.exports = uploadRouter;
