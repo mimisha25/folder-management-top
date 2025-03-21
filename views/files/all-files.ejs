@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+        <main class="p-5 ">
+            <%if(user){%>
+                <h1>All Files</h1>
+                <% if (allFiles.length> 0) { %>
+                    <div class="table-responsive">
+                        <table class="table  table-striped table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">File Name</th>
+                                    <th scope="col">Size (KB)</th>
+                                    <th scope="col">Folder</th>
+                                    <th scope="col">Uploaded By</th>
+                                    <th scope="col">Download</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-warning table-group-divider">
+                                <% let i=1; %>
+                                    <% allFiles.forEach(file=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= i++; %>
+                                            </td>
+                                            <td>
+                                                <%= file.name %>
+                                            </td>
+                                            <td>
+                                                <%= (file.size / (1024 * 1024)).toFixed(2) %> MB
+                                            </td>
+                                            <td>
+                                                <%= file.folder ? file.folder.name : 'No Folder' %>
+                                            </td>
+                                            <td>
+                                                <%= file.user.username %>
+
+                                            </td>
+                                            <td><a href="<%= file.publicUrl %>" target="_blank"
+                                                    class="text-decoration-none text-success">Download</a></td>
+                                        </tr>
+                                        <% }); %>
+                            </tbody>
+                            <tfoot class="table-info">
+                                <td colspan="6">Total: <strong>
+                                        <%= allFiles.length%>
+                                    </strong>files
+                                </td>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <% } else { %>
+                        <p>No files available.</p>
+                        <% } %>
+                            <% } %>
+                                <%- include('../partials/footer') %>
