@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
+        <main class="p-5 m-auto">
+            <%if(user){%>
+                <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                    <div class="card-header py-3 text-bg-primary border-primary">
+                        <h4 class="my-0 fw-normal">File Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li><strong>Name:</strong>
+                                <%= file.name %>
+                            </li>
+                            <li><strong>Size:</strong>
+                                <%= (file.size / (1024 * 1024)).toFixed(2) %> MB
+                            </li>
+                            <li><strong>Uploaded At:</strong>
+                                <%= new Date(file.uploadedAt).toLocaleString() %>
+                            </li>
+                        </ul>
+                        <a href="/uploads/<%= file.path %>" download="<%= file.name %>">
+                            <button type="button" class="w-100 btn btn-lg btn-primary">Download</button>
+                        </a>
+                    </div>
+                </div>
+                <% } %>
+                    <%- include('../partials/footer') %>
