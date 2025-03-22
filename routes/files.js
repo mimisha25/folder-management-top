@@ -2,6 +2,8 @@ const { Router } = require('express');
 const filesRouter = Router();
 const prisma = require('../prisma-config')
 const checkAuth = require('../utils/auth');
+const path = require('path');
+const fs = require('fs');
 
 filesRouter.get('/files', checkAuth, async (req, res) => {
     try {
