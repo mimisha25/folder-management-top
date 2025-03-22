@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/CSS/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <header data-bs-theme="dark">
+        <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+            <div class="container-fluid mx-5">
+                <a class="navbar-brand" href="/">FilerCo</a>
+                <div>
+                    <%if(user){%>
+                        <a href="/dashboard" role="button" class="btn btn-secondary">Dashboard</a>
+                        <% }else{%>
+                            <a href="/login" role="button" class="btn btn-secondary">Log In</a>
+                            <a href="/register" role="button" class="btn btn-secondary">Sign In</a>
+                            <%}%>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="myCarousel" class="carousel slide mb-5 vh-60" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+                    aria-label="Slide 1" aria-current="true"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"
+                    class=""></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"
+                    class=""></button>
+            </div>
+            <div class="carousel-inner ">
+                <div class="carousel-item  active">
+                    <%- include('./assets/imgHome/carousel1') %>
+                        <div class="container ">
+
+                            <div class="carousel-caption text-center text-dark mb-5">
+                                <h1>Organize your file</h1>
+                                <p class="opacity-75">Start exploring file management app FilerCo</p>
+                                <%if(!user){%>
+
+                                    <p><a class="btn btn-lg btn-primary" href="/register">Sign Up</a></p>
+                                    <%}%>
+                            </div>
+                        </div>
+                </div>
+                <div class="carousel-item">
+                    <%- include('./assets/imgHome/carousel2') %>
+                        <div class="container">
+                            <div class="carousel-caption text-light mb-5">
+                                <h1>Sharable link</h1>
+                                <p>Share with anyone your selected folder</p>
+                                <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                            </div>
+                        </div>
+                </div>
+                <div class="carousel-item">
+                    <%- include('./assets/imgHome/carousel3') %>
+                        <div class="container">
+                            <div class="carousel-caption text-end text-dark mb-5">
+                                <h1>Save all your file!</h1>
+                                <p>You can upload more than 15 types of files and have storage more than 1TB</p>
+                                <p><a class="btn btn-lg btn-primary" href="#">Show details</a></p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="container marketing">
+            <div class="row mb-5 mx-5">
+                <div class="col-lg-4">
+                    <img src="https://images.unsplash.com/photo-1595860041826-de0b53177bcd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Zm9sZGVyfGVufDB8fDB8fHww"
+                        alt="" width="140" height="140" class="rounded-circle">
+                    <h2 class="fw-normal">File Types</h2>
+                    <p>Explore all 15 type of files..</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="https://images.unsplash.com/photo-1611764553921-437fb44f747a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGZpbGV8ZW58MHx8MHx8fDA%3D"
+                        alt="" width="140" height="140" class="rounded-circle">
+
+                    <h2 class="fw-normal">Share Folder</h2>
+                    <p>See how you can share your folder with anyone..</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <img src="https://images.unsplash.com/photo-1457694587812-e8bf29a43845?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZpbGV8ZW58MHx8MHx8fDA%3D"
+                        alt="" width="140" height="140" class="rounded-circle">
+
+                    <h2 class="fw-normal">Multiple access</h2>
+                    <p>Shared folder can be accessed by anyone who has link</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+            </div>
+
+
+            <hr class="featurette-divider">
+            <div class="row featurette">
+                <div class="col-md-7 text-center my-auto">
+                    <h2 class="featurette-heading fw-normal lh-1">Sharable feature! <span
+                            class="text-body-secondary">It’ll blow your mind.</span></h2>
+                    <p class="lead">This feature allows you to easily share your selected folder with anyone via a
+                        secure, encrypted link, ensuring that your data stays private and protected. You can set an
+                        expiration time for the link, giving you control over how long the recipient has access to your
+                        folder. </p>
+                </div>
+                <div class="col-md-5">
+                    <img src="https://plus.unsplash.com/premium_photo-1677402408071-232d1c3c3787?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9sZGVyfGVufDB8fDB8fHww"
+                        alt="" class="object-fit-cover" width="500" height="500">
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row featurette">
+                <div class="col-md-7 order-md-2  text-center my-auto">
+                    <h2 class="featurette-heading fw-normal lh-1">Multiple access! <span
+                            class="text-body-secondary">Work with your team!</span></h2>
+                    <p class="lead">Sharable folder can be accessed live, meaning any updates or changes you make
+                        are instantly reflected for anyone with the link.</p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d29yayUyMGZyaWVuZHN8ZW58MHwwfDB8fHww"
+                        alt="" class="object-fit-cover" width="500" height="500">
+                </div>
+            </div>
+            <hr class="featurette-divider">
+            <div class="row featurette">
+                <div class="col-md-7   text-center my-auto">
+                    <h2 class="featurette-heading fw-normal lh-1">Various type of files! <span
+                            class="text-body-secondary">Checkmate.</span></h2>
+                    <p class="lead">You can work with more than 15 type of files and you can upgrade the limit of
+                        storage up to 1TB!</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="https://media.istockphoto.com/id/183412382/photo/multy-backup-plans.webp?a=1&b=1&s=612x612&w=0&k=20&c=h8Z_hsIdmntqumc4ofuglU3VwR6t6Y-vCrwFtv09SwE="
+                        alt="" class="object-fit-cover" width="500" height="500">
+                </div>
+            </div>
+            <hr class="featurette-divider">
+        </div>
+
+        <footer class="container">
+            <p class="float-end"><a href="#" class="text-decoration-none text-dark">Back to top</a></p>
+            <p>© FilerCo Company, Inc.</p>
+        </footer>
+
+        <%- include('./partials/footer') %>
