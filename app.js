@@ -56,13 +56,13 @@ app.use((err, req, res, next) => {
 const dashboardRouter = require('./routes/dashboard');
 const foldersRouter = require('./routes/folder');
 const filesRouter = require('./routes/files');
-// const homeRouter = require('./routes/home');
+const homeRouter = require('./routes/home');
 const uploadRouter = require('./routes/upload');
 
 app.use('/', dashboardRouter);
 app.use('/', foldersRouter);
 app.use('/', filesRouter);
-// app.use('/', homeRouter);
+app.use('/', homeRouter);
 app.use('/', uploadRouter);
 
 
