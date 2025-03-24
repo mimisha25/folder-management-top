@@ -5,6 +5,10 @@ const multer = require('multer');
 const prisma = require('../prisma-config')
 const checkAuth = require('../utils/auth');
 const cloudinary = require('../cloudinary-config')
+const catchAsync = require('../utils/catchAsync');
+const ExpressError = require('../utils/ExpressError');
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, './uploads'),
     filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
@@ -27,28 +31,26 @@ const upload = multer({
 });
 
 
-uploadRouter.post('/upload', upload.single('file'), async (req, res) => {
-    if (!req.file) return res.status(400).send('No file uploaded.');
-    try {
-        const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
-            resource_type: 'auto',
-        });
-        const fileUrl = cloudinaryResult.secure_url;
-        const { folderId } = req.body;
-        const file = await prisma.file.create({
-            data: {
-                name: req.file.originalname,
-                path: req.file.path,
-                publicUrl: fileUrl,
-                size: req.file.size,
-                folderId,
-                userId: req.session.userId,
-            }
-        });
-        // if(fileUrl) fs.unlinkSync(req.file.path);
-        res.redirect(`/folders/${folderId}`);
-    } catch (error) { res.status(500).send('Error uploading file to Cloudinary: ' + error.message) }
-});
+uploadRouter.post('/upload', upload.single('file'), checkAuth, catchAsync(async (req, res) => {
+    if (!req.file) throw new ExpressError('No file uploaded.', 400);
+    const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
+        resource_type: 'auto',
+    });
+    const fileUrl = cloudinaryResult.secure_url;
+    const { folderId } = req.body;
+    const file = await prisma.file.create({
+        data: {
+            name: req.file.originalname,
+            path: req.file.path,
+            publicUrl: fileUrl,
+            size: req.file.size,
+            folderId,
+            userId: req.session.userId,
+        }
+    });
+    // if(fileUrl) fs.unlinkSync(req.file.path);
+    res.redirect(`/folders/${folderId}`);
+}));
 
 
 module.exports = uploadRouter;
