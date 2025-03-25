@@ -9,25 +9,25 @@
                             <div class="list-group ">
                                 <div class="list-group-item list-group-item-action d-flex gap-3 py-3 my-1 bg-success bg-gradient text-light"
                                     aria-current="true">
-                                    <%- include('../assets/folderList') %>
-                                        <div class="d-flex gap-2 w-100 justify-content-between flex-row ">
-                                            <div>
-                                                <h4 class="mb-0"> <a class="text-decoration-none text-light"
-                                                        href="/folders/<%= folder.id %>">
-                                                        <%= folder.name %>
-                                                    </a></h4>
-                                            </div>
-                                            <% if (folder.shareToken) { %>
-                                                <div class="mb-0 text-center ">
-                                                    <a href="http://localhost:3001/share/<%= folder.shareToken %>"
-                                                        class="fst-italic link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-light">
-                                                        Link
-                                                    </a>
-                                                    <% } else { %>
-                                                        <%- include('../partials/generateShareLink', {folder}) %>
-                                                </div>
-                                                <% } %>
+                                    <img src="icons/folderList.svg" alt="">
+                                    <div class="d-flex gap-2 w-100 justify-content-between flex-row ">
+                                        <div>
+                                            <h4 class="mb-0"> <a class="text-decoration-none text-light"
+                                                    href="/folders/<%= folder.id %>">
+                                                    <%= folder.name %>
+                                                </a></h4>
                                         </div>
+                                        <% if (folder.shareToken) { %>
+                                            <div class="mb-0 text-center ">
+                                                <a href="http://localhost:3001/share/<%= folder.shareToken %>"
+                                                    class="fst-italic link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-light">
+                                                    Link
+                                                </a>
+                                                <% } else { %>
+                                                    <%- include('../partials/generateShareLink', {folder}) %>
+                                            </div>
+                                            <% } %>
+                                    </div>
                                 </div>
                             </div>
                             <% }) %>
