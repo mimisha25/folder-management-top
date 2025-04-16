@@ -66,4 +66,4 @@ app.use('/', dashboardRouter);
 
 
 
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server running at http://localhost:${PORT}/home`));
