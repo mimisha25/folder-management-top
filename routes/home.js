@@ -1,13 +1,8 @@
 const { Router } = require('express');
 const homeRouter = Router();
-const prisma = require('../prisma-config')
 const catchAsync = require('../utils/catchAsync');
+const dashboard = require('../controller/dashboard');
 
-
-homeRouter.use('/home', catchAsync(async (req, res) => {
-    let user = null;
-    if (req.session.userId) user = await prisma.user.findUnique({ where: { id: req.session.userId } });
-    res.render('home', { user, currentPath: '/home' })
-}))
+homeRouter.use('/home', catchAsync(dashboard.homePage))
 
 module.exports = homeRouter;
