@@ -2,12 +2,9 @@ const { Router } = require('express');
 const uploadRouter = Router();
 const path = require('path');
 const multer = require('multer');
-const prisma = require('../prisma-config')
 const checkAuth = require('../utils/auth');
-const cloudinary = require('../cloudinary-config')
 const catchAsync = require('../utils/catchAsync');
-const ExpressError = require('../utils/ExpressError');
-
+const files = require('../controller/file');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, './uploads'),
@@ -31,26 +28,7 @@ const upload = multer({
 });
 
 
-uploadRouter.post('/upload', upload.single('file'), checkAuth, catchAsync(async (req, res) => {
-    if (!req.file) throw new ExpressError('No file uploaded.', 400);
-    const cloudinaryResult = await cloudinary.uploader.upload(req.file.path, {
-        resource_type: 'auto',
-    });
-    const fileUrl = cloudinaryResult.secure_url;
-    const { folderId } = req.body;
-    const file = await prisma.file.create({
-        data: {
-            name: req.file.originalname,
-            path: req.file.path,
-            publicUrl: fileUrl,
-            size: req.file.size,
-            folderId,
-            userId: req.session.userId,
-        }
-    });
-    // if(fileUrl) fs.unlinkSync(req.file.path);
-    res.redirect(`/folders/${folderId}`);
-}));
+uploadRouter.post('/upload', upload.single('file'), checkAuth, catchAsync(files.uploadFile));
 
 
 module.exports = uploadRouter;
