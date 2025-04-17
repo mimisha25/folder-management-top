@@ -43,8 +43,8 @@ module.exports.createShareLink = async (req, res) => {
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + duration);
     await prisma.folder.update({ where: { id: folderId }, data: { shareToken: tokenString, shareExpiresAt: expirationDate } });
-    const shareLink = `http://localhost:${process.env.PORT}/share/${tokenString}`;
-    res.render('folders/folder-details', { shareLink, user: req.user, folder: await prisma.folder.findUnique({ where: { id: folderId } }) });
+    const shareLink = `http://localhost:${process.env.PORT}/folders/share/${tokenString}`;
+    res.render('folders/folders', { currentPath: '/folders', shareLink, user: req.user, folder: await prisma.folder.findUnique({ where: { id: folderId } }) });
 }
 
 module.exports.showCreatedLink = async (req, res) => {
@@ -57,7 +57,7 @@ module.exports.showCreatedLink = async (req, res) => {
     const user = req.session.userId
         ? await prisma.user.findUnique({ where: { id: req.session.userId } })
         : null;
-    const shareLink = `http://localhost:${process.env.PORT}/share/${token}`;
+    const shareLink = `http://localhost:${process.env.PORT}/folders/share/${token}`;
     const shareExpiresAt = folder.shareExpiresAt;
     if (shareExpiresAt) {
         const date = shareExpiresAt.toLocaleDateString();
@@ -69,7 +69,10 @@ module.exports.showCreatedLink = async (req, res) => {
 
 module.exports.showAllSharedLinks = async (req, res) => {
     const sharedFolders = await prisma.folder.findMany({
-        where: { userId: req.session.userId, shareToken: { not: null } }
+        where: {
+            userId: req.session.userId,
+            shareToken: { not: null }
+        }
     });
     sharedFolders.forEach(folder => {
         const shareExpiresAt = folder.shareExpiresAt;
@@ -79,5 +82,6 @@ module.exports.showAllSharedLinks = async (req, res) => {
             folder.formattedShareExpiresAt = { date, time };
         }
     });
+    console.log(sharedFolders);
     res.render('folders/shared-folders-list', { sharedFolders, user: req.user, currentPath: '/shared' });
 }

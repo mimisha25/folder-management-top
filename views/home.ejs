@@ -14,13 +14,13 @@
     <header data-bs-theme="dark">
         <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
             <div class="container-fluid mx-5">
-                <a class="navbar-brand" href="/home">FilerCo</a>
+                <a class="navbar-brand" href="/">FilerCo</a>
                 <div>
                     <%if(user){%>
                         <a href="/dashboard" role="button" class="btn btn-secondary">Dashboard</a>
                         <% }else{%>
-                            <a href="/login" role="button" class="btn btn-secondary">Log In</a>
-                            <a href="/register" role="button" class="btn btn-secondary">Sign In</a>
+                            <a href="/auth/login" role="button" class="btn btn-secondary">Log In</a>
+                            <a href="/auth/register" role="button" class="btn btn-secondary">Sign In</a>
                             <%}%>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                             <p class="opacity-75">Start exploring file management app FilerCo</p>
                             <%if(!user){%>
 
-                                <p><a class="btn btn-lg btn-primary" href="/register">Sign Up</a></p>
+                                <p><a class="btn btn-lg btn-primary" href="/auth/register">Sign Up</a></p>
                                 <%}%>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ const prisma = require('../prisma-config');
 const ExpressError = require('../utils/expressError');
 
 module.exports.createUserGet = (req, res) => {
-    res.render('auth', { link: '/login', action: '/register', linkT: 'Log In', header: 'Sign In' });
+    res.render('auth', { link: '/auth/login', action: '/auth/register', linkT: 'Log In', header: 'Sign In' });
 };
 
 module.exports.createUserPost = async (req, res) => {
@@ -12,12 +12,12 @@ module.exports.createUserPost = async (req, res) => {
     const user = await prisma.user.create({
         data: { username, password: hashedPassword }
     });
-    res.redirect('/login');
+    res.redirect('/auth/login');
 };
 
 
 module.exports.loginUserGet = (req, res) => {
-    res.render('auth', { action: '/login', link: '/register', header: 'Log In', linkT: 'Sign In' });
+    res.render('auth', { action: '/auth/login', link: '/auth/register', header: 'Log In', linkT: 'Sign In' });
 }
 
 module.exports.loginUserPost = async (req, res) => {
@@ -34,7 +34,7 @@ module.exports.loginUserPost = async (req, res) => {
 module.exports.logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) throw new ExpressError('Error logging out', 500);
-        res.redirect('/home');
+        res.redirect('/');
     });
 }
 
@@ -47,5 +47,5 @@ module.exports.dashboardGet = async (req, res) => {
 module.exports.homePage = async (req, res) => {
     let user = null;
     if (req.session.userId) user = await prisma.user.findUnique({ where: { id: req.session.userId } });
-    res.render('home', { user, currentPath: '/home' })
+    res.render('home', { user, currentPath: '/' })
 }

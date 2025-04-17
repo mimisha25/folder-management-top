@@ -1,40 +1,41 @@
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary vh-100" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <img src="icons/logo1.svg" alt="" class="me-2">
+        <img src="/icons/logo1.svg" alt="" class="me-2">
         <span class="fs-4">FilerCo</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/home" class="nav-link <%= (currentPath === '/home') ? 'active text-light' : ' text-dark' %>"
+            <a href="/" class="nav-link <%= (currentPath === '/') ? 'active text-light' : ' text-dark' %>"
                 aria-current="page">
-                <img src="icons/home.svg" alt="" class="me-2">
+                <img src="/icons/home.svg" alt="" class="me-2">
                 Home
             </a>
         </li>
         <li>
             <a href="/dashboard"
                 class="nav-link <%= (currentPath === '/dashboard') ? 'active text-light' : ' text-dark' %>">
-                <img src="icons/dashboard.svg" alt="" class="me-2">
+                <img src="/icons/dashboard.svg" alt="" class="me-2">
                 Dashboard
             </a>
         </li>
         <li>
             <a href="/folders"
                 class="nav-link <%= (currentPath === '/folders') ? 'active text-light' : ' text-dark' %>">
-                <img src="icons/folders.svg" alt="" class="me-2">
+                <img src="/icons/folders.svg" alt="" class="me-2">
                 Folders
             </a>
         </li>
         <li>
             <a href="/files" class="nav-link <%= (currentPath === '/files') ? 'active text-light' : ' text-dark' %>">
-                <img src="icons/files.svg" alt="" class="me-2">
+                <img src="/icons/files.svg" alt="" class="me-2">
                 Files
             </a>
         </li>
         <li>
-            <a href="/shared" class="nav-link <%= (currentPath === '/shared') ? 'active text-light' : ' text-dark' %>">
-                <img src="icons/shared.svg" alt="" class="me-2">
+            <a href="/folders/shared"
+                class="nav-link <%= (currentPath === '/folders/shared') ? 'active text-light' : ' text-dark' %>">
+                <img src="/icons/shared.svg" alt="" class="me-2">
                 Shared Folders
             </a>
         </li>
@@ -45,7 +46,7 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="icons/profile.svg" alt="" class="me-2">
+                <img src="/icons/profile.svg" alt="" class="me-2">
 
                 <strong class="mx-1">
                     <%=user.username%>
@@ -58,13 +59,13 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                <li><a class="dropdown-item" href="/auth/logout">Log out</a></li>
             </ul>
         </div>
         <%}else{%>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <a href="/register" role="button" class="btn btn-success">Sign In</a>
-                <a href="/login" role="button" class="btn btn-primary">Log In</a>
+                <a href="/auth/register" role="button" class="btn btn-success">Sign In</a>
+                <a href="/auth/login" role="button" class="btn btn-primary">Log In</a>
             </div>
 
             <%}%>

@@ -58,12 +58,15 @@ const foldersRouter = require('./routes/folder');
 const filesRouter = require('./routes/files');
 const homeRouter = require('./routes/home');
 const uploadRouter = require('./routes/upload');
-app.use('/', uploadRouter);
-app.use('/', foldersRouter);
-app.use('/', filesRouter);
+const authRouter = require('./routes/auth');
+
 app.use('/', homeRouter);
-app.use('/', dashboardRouter);
+app.use('/auth', authRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/files', uploadRouter);
+app.use('/files', filesRouter);
+app.use('/folders', foldersRouter);
 
 
 
-app.listen(process.env.PORT, () => console.log(`Server running at http://localhost:${PORT}/home`));
+app.listen(process.env.PORT, () => console.log(`Server running at http://localhost:${PORT}`));

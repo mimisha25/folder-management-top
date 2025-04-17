@@ -18,7 +18,7 @@
                                 <%= new Date(file.uploadedAt).toLocaleString() %>
                             </li>
                         </ul>
-                        <a href="/uploads/<%= file.path %>" download="<%= file.name %>">
+                        <a href="/files/uploads/<%= file.path %>" download="<%= file.name %>">
                             <button type="button" class="w-100 btn btn-lg btn-primary">Download</button>
                         </a>
                     </div>
