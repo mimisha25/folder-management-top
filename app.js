@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const flash = require('connect-flash');
+const PrismaSessionStore = require('./prisma-session-store');
+const prisma = require('./prisma-config')
+
 
 app.use(flash());
 
@@ -23,30 +26,31 @@ app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
+    store: new PrismaSessionStore({
+        db: prisma,
+    }),
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        sameSite: "None",
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
 
 app.use(passport.session());
 
-// app.use((req, res, next) => {
-//     res.locals.user = req.user || null;
-//     next();
-// })
-// app.use((req, res, next) => {
-//     res.locals.currentPath = req.path;
-//     next();
-// });
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
+app.set('trust proxy', 1);
 app.use((err, req, res, next) => {
+    if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect('https://' + req.headers.host + req.url);
+    }
     const { statusCode = 500 } = err;
     if (!err.message) err.message = "Something is wrong!";
     res.status(statusCode).render('partials/error', { err });
