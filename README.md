@@ -7,10 +7,10 @@ This web application is built using a modern tech stack, including **Node.js** a
 ## Technologies 💻
 | Field | Languages |
 |------:|-----------|
-|     Web Development | HTML|
-|     Styling | CSS    |
-|     Front-End | JavaScript    |
-|     Templating Engine | EJS    |
+|   Web Development | HTML|
+|   Styling | CSS    |
+|   Front-End | JavaScript    |
+|   Templating Engine | EJS    |
 |   UI Framework | Bootstrap    |
 |   Back-End | Node JS   |
 |   Back-End Framework | Express   |
@@ -21,13 +21,15 @@ This web application is built using a modern tech stack, including **Node.js** a
 |   Database | PostgreSQL   |
 |   Database | Prisma ORM   |
 |   Storage | Cloudinary   |
+|   Database Storage | Neon   |
 
 ## Features 💡
 - **Back-End**: Utilizes Node.js for server-side operations, with Express for simplifying routing and middleware management. Sensitive information and keys are securely stored using dotenv.
-- **DataBase**: Integration with PostgreSQL ensures reliable and scalable data storage
+- **DataBase**: Integration with PostgreSQL ensures reliable and scalable data storage. 
 - **Architecture**: Follows the MVC (Model-View-Controller) design pattern for a clean, maintainable, and modular code structure.
 - **Templating Engine**:  EJS is used to dynamically render views, allowing efficient presentation of data on the front-end.
-- **Database Framework**:  Prisma ORM management with PostgreSQL databse.
+- **Database Framework**:  Prisma ORM management with PostgreSQL database.
+- **Cloud Management**:  Cloudinary configuration to save the files. Neon Database cloud to save database informations.
 
 #### **Authentication**:
 - **BcryptJS** is employed to hash and salt user passwords, ensuring secure storage.
@@ -37,8 +39,9 @@ This web application is built using a modern tech stack, including **Node.js** a
   
 #### **Frontend & Design**:
 - The app is designed with **CSS** and **Bootstrap**, using components like forms, sidebar, and cards.
-- Icons are sourced from **Bootstrap Icons** and images are sourced from [Unsplash](https://unsplash.com/), while product images are managed via [Cloudinary](https://cloudinary.com/?utm_campaign=1329&utm_content=instapagelogocta-selfservetest) for efficient loading and storage.
+- Icons are sourced from **Bootstrap Icons** and images are sourced from [Unsplash](https://unsplash.com/), while product images are managed via [Cloudinary](https://cloudinary.com) for efficient loading and storage.
 - User's uploaded files is saved on cloudinary as well on local server. Set up cloudinary config.
+- Database storage is on [Neon](https://neon.tech/)
 - The app is fully **responsive**, optimized for desktop, tablet, and mobile devices, ensuring a smooth and intuitive user experience on any screen size.
 - **Validation**: Express Validator is utilized for input validation, ensuring clean, user-friendly forms with Bootstrap styling.
 - **Frontend Dynamics**: JavaScript is employed to handle dynamic changes on the front-end, enhancing user interaction.
@@ -109,15 +112,15 @@ CLOUDINARY_API_KEY='key'
 CLOUDINARY_API_SECRET='secret'
 ```
 11. Start the application:
-- The application run on port 8080 by default. Please, specify your port in .env file DB_PORT=custom port:
-- Then run the application:
+- The application run on port 8080 by default in development mode. Please, specify your port in .env file DB_PORT=custom port:
+- Then run the application in development mode, if it is production mode please set up required parametrs for it:
 ```
 npm run dev
 ```
 
 ## Deployment ✅
 The application is deployed on Render. 
-Please, visit the live website here: [Live Application](link)
+Please, visit the live website here: [Live Application](https://folder-management.onrender.com)
 
 
 ## License ©
